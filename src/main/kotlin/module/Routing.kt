@@ -22,6 +22,7 @@ fun Application.configureRouting() {
             if (userExists) {
                 sendResponse(call, -1, "Username already exists")
             } else {
+
                 transaction {
                     Users.insert {
                         it[username] = user.username
@@ -51,8 +52,11 @@ fun Application.configureRouting() {
 
         get("/getTasks") {
             try {
-                val userId = call.receive<UserId>().userId
-                println(userId)
+                val userId = call.request.queryParameters["id"]?.toIntOrNull()
+                if (userId == null) {
+                    sendResponse(call, -1, "Invalid user ID")
+                    return@get
+                }
 
                 val tasks = transaction {
                     Tasks.select { Tasks.userId eq userId }
@@ -72,6 +76,7 @@ fun Application.configureRouting() {
                 sendResponse(call, -1, "Error: ${e.localizedMessage}")
             }
         }
+
 
         post("/addTask") {
             try {

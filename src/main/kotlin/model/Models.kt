@@ -21,11 +21,11 @@ data class IdModel(
 
 @Serializable
 data class TaskDTO(
-    val userId: Int,
-    val id: Int,
-    val title: String,
-    val content: String,
-    val lastModifiedDate: String,
+        val userId: Int,
+        val id: Int,
+        val title: String,
+        val content: String,
+        val lastModifiedDate: String,
 )
 
 @Serializable
