@@ -9,7 +9,6 @@ This is a simple backend for a ToDo app built with Ktor and Exposed.
 *   User authentication (register & login)
 *   Create, read, update, and delete tasks
 *   Uses MariaDB as the database
-*   Structured with MVVM and Clean Architecture principles
 
 ⚙️ Setup & Installation
 -----------------------
