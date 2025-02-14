@@ -133,9 +133,10 @@ fun Application.configureRouting() {
         }
 
         delete("/deleteTask") {
-            val taskId = call.receive<IdModel>().id
+            val taskId = call.request.queryParameters["id"]?.toIntOrNull()
+
             val response = try {
-                run {
+                if (taskId != null) {
                     val deletedRows = transaction {
                         Tasks.deleteWhere { Tasks.id eq taskId }
                     }
@@ -144,6 +145,8 @@ fun Application.configureRouting() {
                     } else {
                         BaseResponse(code = -2, message = "Task not found", data = emptyList())
                     }
+                } else {
+                    BaseResponse(code = -1, message = "Invalid task ID", data = emptyList())
                 }
             } catch (e: Exception) {
                 BaseResponse(code = -1, message = "Error occurred: ${e.localizedMessage}", data = emptyList())
